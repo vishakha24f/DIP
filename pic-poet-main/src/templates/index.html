@@ -1,0 +1,37 @@
+{% extends "layout.html" %} {% block content %}
+<h2>Pic Poet</h2>
+<a href="{{ url_for('about') }}">About</a>
+{% with messages = get_flashed_messages() %} {% if messages %}
+<div class="system">
+  <h3>System Messages</h3>
+  {% for message in messages %}
+  <p>{{ message }}</p>
+  {% endfor %}
+</div>
+{% endif %} {% endwith %}
+<p>Upload an image to inspire a poem</p>
+<form
+  action="{{ url_for('search') }}"
+  enctype="multipart/form-data"
+  method="post"
+>
+  <input type="file" name="file" />
+  <input type="submit" value="Submit Image" />
+</form>
+
+<!-- Hidden loading div -->
+<div id="loading" style="display: none">
+  <img src="../static/loading.gif" alt="Loading..." />
+  <p>Seeking inspiration...</p>
+</div>
+
+<!-- JS for handling loading div -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $('form').on('submit', function () {
+      $('#loading').show();
+    });
+  });
+</script>
+{% endblock %}
